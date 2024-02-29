@@ -10,6 +10,7 @@ async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
 }
 
+// Checking DB connection
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -57,6 +58,11 @@ app.put('/campgrounds/:id', async (req, res) => {
   const campground = await Campground.findById(req.params.id);
   await Campground.findByIdAndUpdate(req.params.id, req.body.campground, { runValidators: true });
   res.redirect(`/campgrounds/${campground._id}`);
+});
+
+app.delete('/campgrounds/:id', async (req, res) => {
+  await Campground.findByIdAndDelete(req.params.id);
+  res.redirect('/campgrounds');
 });
 
 app.listen(3000, () => {

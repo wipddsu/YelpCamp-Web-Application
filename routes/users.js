@@ -28,7 +28,7 @@ router.post(
   })
 );
 
-router.get('/login', (req, res) => {
+router.get('/login', storeReturnTo, (req, res) => {
   res.render('users/login');
 });
 
